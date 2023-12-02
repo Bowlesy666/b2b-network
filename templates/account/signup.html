@@ -1,0 +1,46 @@
+{% extends "account/account_base.html" %}
+{% load allauth i18n socialaccount %}
+
+{% block content %}
+<div class="container">
+
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                <div class="col-lg-7">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                        </div>
+                        {% url 'account_signup' as action_url %}
+                        {% element form form=form method="post" action=action_url tags="entrance,signup" %}
+                            {% slot body %}
+                                {% csrf_token %}
+                                <p>FYI: Your username is displayed to other users!</p>
+                                {% element fields form=form unlabeled=True %}
+                                {% endelement %}
+                                {% if redirect_field_value %}
+                                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                                {% endif %}
+                            {% endslot %}
+                            {% slot actions %}
+                                {% element button tags="prominent,signup" type="submit" %}
+                                    {% trans "Sign Up" %}
+                                {% endelement %}
+                            {% endslot %}
+                        {% endelement %}
+                        {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+                        <hr>
+                        <div class="text-center">
+                            {% blocktrans %}Already have an account? <a href="{{ login_url }}" aria-label="login">Login!</a>.{% endblocktrans %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends "base.html" %} {% block content %} {% load static %}
+<div class="container-xl px-4 mt-4">
+    <div class="row">
+        <div class="col-xl ">
+            <div class="card chat-bg mb-4 negative-margin-sides">
+                <div class="card-header">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-2 mr-2">
+                                <a class="btn btn-outline-primary" href="{% url 'conversation_list' %}"><i class="fa-solid fa-caret-left fa-2xl"></i>Inbox</a>
+                            </div>
+                            {% if conversation.sender_profile.user == request.user %}
+                            <div class="col-3 ml-3">
+                                <img src="{% if 'placeholder' in conversation.receiver_profile.user_profile_img.url %}{% static 'img/undraw_profile.svg' %}{% else %}{{ conversation.receiver_profile.user_profile_img.url }}{% endif %}"
+                                    alt="user avatar" class="img-profile rounded-circle mr-1 mt-2" width="50">
+                            </div>
+                            <div class="col">
+                                <h1 class="text-truncate"><small> {{ conversation.receiver_profile.user.first_name }} {{ conversation.receiver_profile.user.last_name }}</small></h1>
+                            </div>
+                            {% elif conversation.receiver_profile.user == request.user %}
+                            <div class="col-3">
+                                <img src="{% if 'placeholder' in conversation.sender_profile.user_profile_img.url %}{% static 'img/undraw_profile.svg' %}{% else %}{{ conversation.sender_profile.user_profile_img.url }}{% endif %}"
+                                    alt="user avatar" class="img-profile rounded-circle mr-1 mt-2" width="50">
+                            </div>
+                            <div class="col">
+                                <h1 class="text-truncate"><small> {{ conversation.sender_profile.user.first_name }} {{ conversation.sender_profile.user.last_name }}</small></h1>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body chat-scroll" id="scroll-top">
+                    <div class="section">
+                        {% if message_list.all.count == 0 %}
+                        <div class="row my-5">
+                            <div class="col-md-12 received-message">
+                                <p class="empty-text">Be the first to send a message...</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% for message in message_list %}
+                            {% if message.sender_profile.user == request.user %}
+                            <div class="col align-self-end sent-message my-2">
+                                <p class="ml-2 mt-1 font-weight-bold">{{ message.message_body }}</p>
+                                <div class="d-flex flex-row-reverse">
+                                    {% if message.is_read %}
+                                    <small>Seen: <i class="fa-solid fa-check text-success"></i><i class="fa-solid fa-check text-success"></i></small> 
+                                    {% else %}
+                                    <small>Sent: <i class="fa-solid fa-check text-gray-400"></i><i class="fa-solid fa-check text-gray-400"></i></small>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <p class="d-flex flex-row-reverse mt-2 mb-0 text-gray-400"><small>Sent: {{ message.created_on }}</small></p>
+                            {% else %}
+                            <div class="col align-self-end received-message my-2">
+                                <p class="ml-2 mt-1 font-weight-bold">{{ message.message_body }}</p>
+                                
+                            </div>
+                            <p class="d-flex flex-row-reverse mt-2 mb-0 text-gray-400">
+                                <small>Sent: {{ message.created_on }}</small>
+                            </p>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <form method="POST" action="{% url 'create-message' conversation.pk %}" enctype="multipart/form-data">
+                    <div class="form-group">
+
+                        <!-- Security token -->
+                        {% csrf_token %}
+
+                        <!-- Using the formset -->
+                        <div class="row card-body">
+                            <div class="col-9" aria-label="enter message text">
+                                {{ form }}
+                            </div>
+                            <div class="col-1 flex-column-reverse">
+                                <div class="empty">.</div>
+                                <button class="btn btn-primary radius-15 ml-0 mt-2" aria-label="send message button" type="submit"><i class="fa-regular fa-paper-plane text-white"></i></button>
+                            </div>
+                        </div> 
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var objDiv = document.getElementById("scroll-top");
+    objDiv.scrollTop = objDiv.scrollHeight;
+</script>
+
+{% endblock %}

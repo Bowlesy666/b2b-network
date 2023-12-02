@@ -1,0 +1,109 @@
+/* styles for logo */
+#b2b-logo {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    border: 2px solid red;
+}
+
+/* cssgradient.io radial gradient for profile detail placeholder bg */
+.radial-gradient {
+    background: rgb(63, 94, 251);
+    background: radial-gradient(circle, rgba(63, 94, 251, 0.1293767507002801) 45%, rgba(63, 94, 251, 1) 100%);
+}
+
+.image-cover {
+    width: 100%;
+    height: auto;
+    background-size: cover;
+}
+
+.hero-image-cover {
+    height: 40vh;
+    width: auto;
+    object-fit: cover;
+}
+
+.bg-light-red {
+    background-color: rgba(255, 0, 0, .065);
+}
+
+.bg-light-green {
+    background-color: rgba(0, 255, 0, .07);
+}
+
+
+/* negative margin reduction for mobiles */
+.negative-margin-sides {
+    margin-left: -2.9rem;
+    margin-right: -2.9rem;
+}
+
+/* Speach bubbles for direct mail app taken from Codepen.io https://codepen.io/jacurtis/pen/jKzPZe */
+.section {
+    width: 95%;
+	margin: 50px auto;
+    display: flex;
+    flex-direction: column-reverse;
+	
+}
+
+.section div {
+    max-width: 85%;
+    word-wrap: break-word;
+    margin-bottom: 12px;
+    line-height: 24px;
+}
+
+.chat-bg, .cover-background {
+    background-image: url("https://images.unsplash.com/photo-1633354998322-415842c7ee11?q=80&w=1153&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-color: #cccccc;
+    height: 100%;
+    width: auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-left: -3.2rem;
+    margin-right: -3.2rem;
+}
+
+.chat-scroll {
+    height: 65vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.text-area-height {
+    max-height: 60px;
+    overflow-y: auto;
+    margin-right: 0;
+}
+
+.sent-message {
+	position:relative;
+    min-width: 40%;
+    max-width: 80%;
+	padding:10px 20px;
+	color:white; 
+	background:#0B93F6;
+	border-radius:25px;
+    margin-left: auto;
+}
+
+.received-message {
+	position:relative;
+    max-width: 80%;
+	padding:10px 20px;
+	background:#E5E5EA;
+	border-radius:25px;
+	color: black;
+    float: left;
+	margin-right: auto;
+}
+
+@media (min-width: 780px) {
+    .negative-margin-sides, .chat-bg {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
